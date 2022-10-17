@@ -1,5 +1,7 @@
 using ControleFinanceiro;
 using ControleFinanceiro.Data;
+using ControleFinanceiro.Interfaces;
+using ControleFinanceiro.Repositories;
 //using ControleFinanceiro.Interfaces;
 //using ControleFinanceiro.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -20,7 +22,7 @@ builder.Services.AddDbContext<AppDbContext>(
      opt => opt.UseSqlServer(Configuration.GetConnectionString("connectionString")));
 
 //interfaces e repositorios
-//builder.Services.AddScoped<IDrinkRepository, DrinkRepository>();
+builder.Services.AddScoped<IBancoRepository, BancoRepository>();
 
 builder.Services.AddCors();
 builder.Services.AddControllersWithViews();

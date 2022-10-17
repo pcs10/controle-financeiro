@@ -9,12 +9,15 @@ namespace ControleFinanceiro.Data
 
         //Referenciando models a tabelas do banco
         public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<Banco> Bancos { get; set; }
+        public DbSet<Saldo> Saldos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<Usuario>()
                 .HasIndex(u => u.Username)
                 .IsUnique(); //definir unique constraint pro campo username
+
         }
 
     }
