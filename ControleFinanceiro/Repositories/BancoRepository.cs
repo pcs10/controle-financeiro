@@ -39,9 +39,18 @@ namespace ControleFinanceiro.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<string> Inserir(Banco banco, int id)
+        public async Task<string> Inserir(Banco banco)
         {
-            throw new NotImplementedException();
+            try
+            {
+                await _context.Bancos.AddAsync(banco);
+                await _context.SaveChangesAsync();
+                return "";
+            }
+            catch (Exception ex)
+            {
+                return "Erro ao inserir -> " + ex;
+            }
         }
     }
 }

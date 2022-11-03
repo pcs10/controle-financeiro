@@ -6,7 +6,7 @@ namespace ControleFinanceiro.Interfaces
     {
         Task<IEnumerable<Banco>> BuscarTodos();
         Task<Banco> BuscarPorId(int id);
-        Task<string> Inserir(Banco banco, int id);
+        Task<string> Inserir(Banco banco);
         Task<string> Alterar(Banco banco, int id);
         Task<string> Excluir(int id);
     }
