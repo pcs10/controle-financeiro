@@ -14,14 +14,43 @@ namespace ControleFinanceiro.Repositories
         {
             _context = context;
         }
-        public Task<string> Alterar(Banco banco, int id)
+        public async Task<string> Alterar(Banco bancoP, int id)
         {
-            throw new NotImplementedException();
-        }
+            var banco = await _context
+                .Bancos
+                .FirstOrDefaultAsync(x => x.Id == id);
 
-        public Task<Banco> BuscarPorId(int id)
+            if (banco == null)
+            {
+                return "Banco não encontrado";
+            }
+            else
+            {
+                banco.Nome = bancoP.Nome == null ? banco.Nome : bancoP.Nome;
+                banco.Descricao = bancoP.Descricao;
+            }
+
+            try
+            {
+                _context.Bancos.Update(banco);
+                await _context.SaveChangesAsync();
+                return "";
+            }
+            catch (Exception ex)
+            {
+                return "Erro ao atualizar -> " + ex;
+            }
+
+
+        } // alterar
+
+        public async Task<Banco> BuscarPorId(int id)
         {
-            throw new NotImplementedException();
+            var banco = await _context
+           .Bancos
+           .FirstOrDefaultAsync(x => x.Id == id);
+
+            return banco;
         }
 
         public async Task<IEnumerable<Banco>> BuscarTodos()
@@ -34,10 +63,25 @@ namespace ControleFinanceiro.Repositories
             return bancos;
         }// buscar todos
 
-        public Task<string> Excluir(int id)
+        public async Task<string> Excluir(int id)
         {
-            throw new NotImplementedException();
-        }
+            var banco = await _context
+           .Bancos
+           .FirstOrDefaultAsync(x => x.Id == id);
+
+            if (banco == null) return "Banco não encontrado";
+
+            try
+            {
+                _context.Bancos.Remove(banco);
+                await _context.SaveChangesAsync();
+                return "";
+            }
+            catch (Exception ex)
+            {
+                return "Erro ao excluir -> " + ex;
+            }
+        } //excluir
 
         public async Task<string> Inserir(Banco banco)
         {
@@ -51,6 +95,6 @@ namespace ControleFinanceiro.Repositories
             {
                 return "Erro ao inserir -> " + ex;
             }
-        }
+        }//inserir
     }
 }
